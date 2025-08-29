@@ -194,3 +194,32 @@ docker-compose up --build
     Your PostgreSQL database will be accessible on port 5432.
 
 Now you can develop your application, and any changes you make to the code on your local machine will be reflected inside the containers automatically thanks to the volumes we defined.
+
+- wtf? for testing this frontend - recommended by copilot
+  - jest
+  - @types/jest
+  - @testing-library/react
+  - @testing-library/jest-dom
+  - @testing-library/user-event
+  - jest-environment-jsdom
+
+  - recommended by testing-library docs
+    - @testing-library/react 
+    - @testing-library/dom       // ai says
+    - @types/react 
+    - @types/react-dom
+
+  - recommended by jest
+    - jest 
+    - babel-jest
+    - @babel/preset-env 
+    - @babel/preset-react 
+    - react-test-renderer
+
+- Inspo from https://github.com/epicweb-dev/epic-stack
+  - use Vitest instead of jest
+  - ai says:
+    - vitest
+    - vitest/ui (nice ui for test results)
+    - @testing-library/react
+    - @testing-library/jest-dom
