@@ -195,13 +195,16 @@ docker-compose up --build
 
 Now you can develop your application, and any changes you make to the code on your local machine will be reflected inside the containers automatically thanks to the volumes we defined.
 
-- wtf? for testing this frontend - recommended by copilot
-  - jest
-  - @types/jest
-  - @testing-library/react
-  - @testing-library/jest-dom
-  - @testing-library/user-event
-  - jest-environment-jsdom
+ 1. React template: `npx create-react-router@latest my-react-router-app`
+
+2. How to testing this frontend? 
+  - recommended by copilot
+    - jest
+    - @types/jest
+    - @testing-library/react
+    - @testing-library/jest-dom
+    - @testing-library/user-event
+    - jest-environment-jsdom
 
   - recommended by testing-library docs
     - @testing-library/react 
@@ -216,10 +219,14 @@ Now you can develop your application, and any changes you make to the code on yo
     - @babel/preset-react 
     - react-test-renderer
 
-- Inspo from https://github.com/epicweb-dev/epic-stack
-  - use Vitest instead of jest
-  - ai says:
+  - Inspo from https://github.com/epicweb-dev/epic-stack
+    - use Vitest instead of jest
+    - ai says:
+      - vitest
+      - vitest/ui (nice ui for test results)
+      - @testing-library/react
+      - @testing-library/jest-dom
+  
+  - recommended from https://github.com/alan2207/bulletproof-react
     - vitest
-    - vitest/ui (nice ui for test results)
-    - @testing-library/react
-    - @testing-library/jest-dom
+    - happy-dom (instead of jsdom)
