@@ -4,10 +4,19 @@ import tailwindcss from "@tailwindcss/vite";
 import { defineConfig } from "vite";
 import tsconfigPaths from "vite-tsconfig-paths";
 
-export default defineConfig({
-  plugins: [tailwindcss(), reactRouter(), tsconfigPaths()],
-  test: {
-    environment: 'happy-dom',
-    globals: true,
-  },
+export default defineConfig(() => {
+  const isVitest = process.env.VITEST === "true";
+
+  return {
+    plugins: [
+      tailwindcss(),
+      !isVitest && reactRouter(),
+      tsconfigPaths(),
+    ].filter(Boolean),
+    test: {
+      environment: 'happy-dom',
+      globals: true,
+      setupFiles: ['app/test/setup.ts'],
+    },
+  };
 });
