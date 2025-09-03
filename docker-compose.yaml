@@ -21,9 +21,6 @@ services:
 # Run in background
 # docker compose up -d
 
-# To rebuild after changes
-# docker-compose build backend
-
 # To stop
 # docker compose down
 
