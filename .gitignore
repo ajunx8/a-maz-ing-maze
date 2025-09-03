@@ -1,6 +1,14 @@
 .DS_Store
-frontend/node_modules/
 
+# Frontend
+frontend/node_modules/
 # React Router
 frontend/.react-router/
 frontend/build/
+
+# Backend
+backend/__pycache__/
+backend/*.pyc
+backend/.venv/
+backend/build/
+backend/dist/

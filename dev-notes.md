@@ -230,3 +230,6 @@ Now you can develop your application, and any changes you make to the code on yo
   - recommended from https://github.com/alan2207/bulletproof-react
     - vitest
     - happy-dom (instead of jsdom)
+
+- Backend: FastAPI docker setup
+  - https://fastapi.tiangolo.com/deployment/docker/#one-process-per-container
