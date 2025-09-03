@@ -10,3 +10,22 @@ services:
     command: sh -lc "npm ci && npm run dev -- --host 0.0.0.0"
     ports:
       - "5173:5173"
+  backend:
+    build: ./backend
+    working_dir: /code
+    ports:
+      - "80:80"
+    volumes:
+      - ./backend:/code
+
+# Run in background
+# docker compose up -d
+
+# To rebuild after changes
+# docker-compose build backend
+
+# To stop
+# docker compose down
+
+# To kill everything
+# docker system prune -a --volumes
