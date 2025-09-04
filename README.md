@@ -127,11 +127,11 @@ a-maze-ing-maze/
 
 The backend provides the following main endpoints:
 
-- `POST /auth/register` - User registration
-- `POST /auth/login` - User login
-- `GET /puzzles` - List available puzzles
-- `POST /puzzles/{puzzle_id}/solve` - Submit puzzle solution
-- `GET /leaderboard` - View leaderboard
+- `GET /api/hello` - Health check endpoint
+- `GET /api/puzzles` - List available puzzles
+- `GET /api/puzzles/{puzzle_id}/grid` - Get puzzle grid layout
+- `POST /api/attempts` - Submit puzzle solution attempt
+- `GET /api/db-health` - Database health check
 
 Full API documentation is available at http://localhost:80/docs when running.
 
