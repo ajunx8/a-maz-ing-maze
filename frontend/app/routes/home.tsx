@@ -17,6 +17,7 @@ export default function Home() {
   const [puzzleId, setPuzzleId] = useState<number | "">("");
   const [moves, setMoves] = useState("");
   const [result, setResult] = useState<string | null>(null);
+  const [grid, setGrid] = useState<string[] | null>(null);
 
   useEffect(() => {
     async function load() {
@@ -53,6 +54,15 @@ export default function Home() {
     }
   }
 
+  async function fetchGrid(id: number) {
+    try {
+      setGrid(null);
+      const res = await fetch(`http://localhost/api/puzzles/${id}/grid`);
+      const data = await res.json();
+      if (data.ok) setGrid(data.grid);
+    } catch { }
+  }
+
   return (
     <main className="p-4 max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold mb-4">A-MAZE-ING-MAZE</h1>
@@ -75,7 +85,11 @@ export default function Home() {
               <select
                 className="border px-2 py-1"
                 value={puzzleId}
-                onChange={(e) => setPuzzleId(e.target.value ? Number(e.target.value) : "")}
+                onChange={(e) => {
+                  const val = e.target.value ? Number(e.target.value) : "";
+                  setPuzzleId(val);
+                  if (typeof val === "number") fetchGrid(val);
+                }}
               >
                 <option value="">Select…</option>
                 {puzzles.map((p) => (
@@ -100,6 +114,14 @@ export default function Home() {
           </form>
 
           {result && <p className="mt-4">{result}</p>}
+
+          {grid && (
+            <pre className="mt-6 p-3 bg-gray-600 inline-block">
+              {grid.map((row, i) => (
+                ` ${row}\n`
+              )).join("")}
+            </pre>
+          )}
         </>
       )}
     </main>

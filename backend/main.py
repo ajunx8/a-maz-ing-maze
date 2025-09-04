@@ -52,6 +52,17 @@ def get_puzzles(db: Session = Depends(get_db)):
     return {"puzzles": [{"id": p.id, "name": p.name, "description": p.description} for p in puzzles]}
 
 
+@app.get("/api/puzzles/{puzzle_id}/grid")
+def get_puzzle_grid(puzzle_id: int, db: Session = Depends(get_db)):
+    puzzle = db.query(Puzzle).filter(Puzzle.id == puzzle_id).first()
+    if not puzzle:
+        return {"ok": False, "detail": "Puzzle not found"}
+    grid = default_puzzles.get(puzzle.name)
+    if not grid:
+        return {"ok": False, "detail": "Puzzle grid not configured"}
+    return {"ok": True, "name": puzzle.name, "grid": grid}
+
+
 @app.get("/api/db-health")
 def db_health(db: Session = Depends(get_db)):
     # Simple check that a query works
