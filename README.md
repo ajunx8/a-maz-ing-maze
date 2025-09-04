@@ -28,4 +28,141 @@ How you structure and document your code.
 How you approach problem-solving and puzzle logic.
 How well you use FastAPI, PostgreSQL, React, and testing.
 
-Please aim to complete as much of this as possible in advance of your final round interview. I will send out a calendar link to book a call with us for next week, providing an opportunity to showcase your work above.  If you need more time to implement the above, please let me know?
+Please aim to complete as much of this as possible in advance of your final round interview. I will send out a calendar link to book a call with us for next week, providing an opportunity to showcase your work above.  If you need more time to implement the above, please let me know?
+
+---
+
+# Getting Started
+
+## Prerequisites
+
+- Docker and Docker Compose (recommended)
+- OR Node.js 20+ and Python 3.13+ for local development
+
+## Quick Start with Docker (Recommended)
+
+1. **Clone the repository**
+   ```bash
+   git clone <repository-url>
+   cd a-maze-ing-maze
+   ```
+
+2. **Start all services**
+   ```bash
+   docker compose up -d
+   ```
+
+3. **Access the application**
+   - Frontend: http://localhost:5173
+   - Backend API: http://localhost:80
+   - API Documentation: http://localhost:80/docs
+   - Database: localhost:5432 (postgres/password)
+
+4. **Stop the services**
+   ```bash
+   docker compose down
+   ```
+
+## Local Development Setup
+
+### Backend Setup
+
+1. **Navigate to backend directory**
+   ```bash
+   cd backend
+   ```
+
+2. **Create and activate virtual environment**
+   ```bash
+   python -m venv venv
+   source venv/bin/activate  # On Windows: venv\Scripts\activate
+   ```
+
+3. **Install dependencies**
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+4. **Run the backend**
+   ```bash
+   fastapi run main.py --reload
+   ```
+
+### Frontend Setup
+
+1. **Navigate to frontend directory**
+   ```bash
+   cd frontend
+   ```
+
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
+
+3. **Run the development server**
+   ```bash
+   npm run dev
+   ```
+
+## Project Structure
+
+```
+a-maze-ing-maze/
+├── backend/                 # FastAPI backend
+│   ├── main.py             # Main application file
+│   ├── models.py           # Database models
+│   ├── puzzle_logic.py     # Maze puzzle logic
+│   ├── db.py              # Database configuration
+│   └── tests/             # Backend tests
+├── frontend/               # React frontend
+│   ├── app/               # React Router v7 app
+│   │   ├── routes/        # Page components
+│   │   └── components/    # Reusable components
+│   └── public/            # Static assets
+└── docker-compose.yaml    # Docker services configuration
+```
+
+## API Endpoints
+
+The backend provides the following main endpoints:
+
+- `POST /auth/register` - User registration
+- `POST /auth/login` - User login
+- `GET /puzzles` - List available puzzles
+- `POST /puzzles/{puzzle_id}/solve` - Submit puzzle solution
+- `GET /leaderboard` - View leaderboard
+
+Full API documentation is available at http://localhost:80/docs when running.
+
+## Testing
+
+### Backend Tests
+```bash
+cd backend
+pytest
+```
+
+### Frontend Tests
+```bash
+cd frontend
+npm test
+```
+
+## Troubleshooting
+
+### Docker Issues
+- If ports are already in use, modify the port mappings in `docker-compose.yaml`
+- To completely reset: `docker system prune -a --volumes`
+
+### Database Issues
+- Ensure PostgreSQL is running and accessible
+- Check database credentials in environment variables
+- Database will be automatically seeded with sample puzzles on first run
+
+### Development Issues
+- Backend runs on port 80 (Docker) or default FastAPI port (local)
+- Frontend runs on port 5173
+- Ensure all services are running before testing the full application
+
+---
