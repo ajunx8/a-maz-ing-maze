@@ -12,3 +12,4 @@ backend/*.pyc
 backend/venv/
 backend/build/
 backend/dist/
+**/__pycache__/**
