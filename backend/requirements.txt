@@ -1,2 +1,5 @@
 fastapi[standard]
 psycopg2-binary
+SQLAlchemy>=2.0
+pydantic>=2.0
+passlib[bcrypt]
