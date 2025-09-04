@@ -10,6 +10,7 @@ services:
     command: sh -lc "npm ci && npm run dev -- --host 0.0.0.0"
     ports:
       - "5173:5173"
+  
   backend:
     build: ./backend
     working_dir: /code
@@ -17,6 +18,26 @@ services:
       - "80:80"
     volumes:
       - ./backend:/code
+    environment:
+      - DATABASE_URL=postgresql://postgres:password@db:5432/mazegame
+    depends_on:
+      - db
+  
+  # NEW: PostgreSQL database service
+  db:
+    image: postgres:15
+    environment:
+      - POSTGRES_DB=mazegame
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+# NEW: Define persistent volume
+volumes:
+  postgres_data:
 
 # Run in background
 # docker compose up -d
