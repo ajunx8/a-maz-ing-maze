@@ -1,5 +1,8 @@
 import type { Route } from "./+types/home";
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { usePuzzles } from "../hooks/usePuzzles";
+import { usePuzzleGrid } from "../hooks/usePuzzleGrid";
+import { usePuzzleSubmission } from "../hooks/usePuzzleSubmission";
 
 export function meta({ }: Route.MetaArgs) {
   return [
@@ -8,66 +11,25 @@ export function meta({ }: Route.MetaArgs) {
   ];
 }
 
-type Puzzle = { id: number; name: string; description?: string };
-
 export default function Home() {
-  const [puzzles, setPuzzles] = useState<Puzzle[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
   const [puzzleId, setPuzzleId] = useState<number | "">("");
   const [moves, setMoves] = useState("");
-  const [result, setResult] = useState<string | null>(null);
-  const [grid, setGrid] = useState<string[] | null>(null);
 
-  useEffect(() => {
-    async function load() {
-      try {
-        const res = await fetch("http://localhost/api/puzzles");
-        if (!res.ok) throw new Error(`Failed: ${res.status}`);
-        const data = await res.json();
-        setPuzzles(data.puzzles ?? []);
-      } catch (e: any) {
-        setError(e.message ?? String(e));
-      } finally {
-        setLoading(false);
-      }
-    }
-    load();
-  }, []);
+  const { puzzles, loading, error: puzzlesError } = usePuzzles();
+  const { grid, loading: gridLoading, fetchGrid } = usePuzzleGrid();
+  const { result, error: submitError, submitting, submitAttempt } = usePuzzleSubmission();
 
   async function onSubmit(e: React.FormEvent) {
     e.preventDefault();
-    setResult(null);
-    setError(null);
-    try {
-      if (!puzzleId) throw new Error("Select a puzzle");
-      const res = await fetch("http://localhost/api/attempts", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ puzzle_id: puzzleId, moves: moves.trim().split("") }),
-      });
-      const data = await res.json();
-      if (!res.ok || data.ok === false) throw new Error(data.detail ?? "Submit failed");
-      setResult(data.valid ? "Valid path!" : "Invalid path");
-    } catch (e: any) {
-      setError(e.message ?? String(e));
-    }
-  }
-
-  async function fetchGrid(id: number) {
-    try {
-      setGrid(null);
-      const res = await fetch(`http://localhost/api/puzzles/${id}/grid`);
-      const data = await res.json();
-      if (data.ok) setGrid(data.grid);
-    } catch { }
+    if (!puzzleId) return;
+    await submitAttempt(puzzleId, moves.trim().split(""));
   }
 
   return (
     <main className="p-4 max-w-2xl mx-auto">
       <h1 className="text-3xl font-bold mb-4">A-MAZE-ING-MAZE</h1>
       {loading && <p>Loading puzzles…</p>}
-      {error && <p className="text-red-600">{error}</p>}
+      {(puzzlesError || submitError) && <p className="text-red-600">{puzzlesError || submitError}</p>}
       {!loading && (
         <>
           <ul className="mb-6 list-disc pl-6">
@@ -108,13 +70,18 @@ export default function Home() {
                 placeholder="RRRDDD"
               />
             </div>
-            <button className="bg-black text-white px-3 py-1" type="submit">
-              Submit
+            <button
+              className="bg-black text-white px-3 py-1 disabled:opacity-50"
+              type="submit"
+              disabled={submitting}
+            >
+              {submitting ? "Submitting..." : "Submit"}
             </button>
           </form>
 
           {result && <p className="mt-4">{result}</p>}
 
+          {gridLoading && <p className="mt-4">Loading grid...</p>}
           {grid && (
             <pre className="mt-6 p-3 bg-gray-600 inline-block">
               {grid.map((row, i) => (
