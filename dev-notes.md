@@ -1,4 +1,4 @@
-### Design Parts
+### Design Parts AI prompt
 - what are the steps to setup the dev environment for a full web application. The source code should be in github, it should be easily setup and ran in docker, it contains a postgres db, a react frontend and pythong (fastAPI) backend. Give a short brief on the steps and the tools I should use. It's a toy project, i.e very simple project.
 
 Of course! Here's a concise guide to setting up a full-stack development environment using FastAPI, React, PostgreSQL, and Docker, all managed with Git and GitHub.
@@ -195,9 +195,9 @@ docker-compose up --build
 
 Now you can develop your application, and any changes you make to the code on your local machine will be reflected inside the containers automatically thanks to the volumes we defined.
 
- 1. React template: `npx create-react-router@latest my-react-router-app`
+1. React template: `npx create-react-router@latest my-react-router-app`
 
-2. How to testing this frontend? 
+2. How to test the frontend? 
   - recommended by copilot
     - jest
     - @types/jest
@@ -213,7 +213,7 @@ Now you can develop your application, and any changes you make to the code on yo
     - @types/react-dom
 
   - recommended by jest
-    - jest 
+    - jest
     - babel-jest
     - @babel/preset-env 
     - @babel/preset-react 
